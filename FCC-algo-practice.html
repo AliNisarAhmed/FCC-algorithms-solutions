@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FCC Algo Practice</title>
+</head>
+<body>
+	<h1>FCC Algo Practice</h1>
+	
+	<script>
+	
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+
+
+/*
+
+// SPINAL TAP CASE - FCC
+
+function spinalCase(str) {
+	let prop = str.replace(/([A-Z])/g, ' $1');
+	prop = prop.split(/[\s\-_]/g);
+	return prop
+			.filter(word => word)
+			.map(word => word.toLowerCase())
+			.join('-');
+	// console.log(prop);
+}
+
+
+console.log(spinalCase("thisIsSpinalTap"));
+console.log(spinalCase("AllThe-small Things"));
+
+
+
+*/
+
+
+// ==================================================================================
+
+/* 
+
+//  Wherefore art thou - FCC
+
+function whatIsInAName(collection, source) {
+  // What's in a name?
+  let arr = [];
+
+  let source_entries = Object.entries(source);
+
+  arr = collection.filter( obj => {
+  	for(let [key, value] of source_entries) {
+  		if( !Object.keys(obj).includes(key) || !Object.values(obj).includes(value)) {
+  			return false;
+  		}
+  	}
+  	return true;
+  });
+  return arr;
+}
+
+console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "bat": 2 }));
+
+
+
+
+
+*/
+
+//=============================================================================================
+
+/*
+
+//  URL SLUG - FCC
+
+// the global variable
+var globalTitle = " Winter Is  Coming";
+
+// Add your code below this line
+function urlSlug(title) {
+  let arr = title.split(/[\s]+/);
+  // console.log(arr);
+  arr = arr
+  		.filter(word => word)
+  		.map(word => word.toLowerCase());
+  return arr.join('-');
+  
+}
+// Add your code above this line
+
+console.log(urlSlug(globalTitle)); // Should be "winter-is-coming"
+
+
+
+
+
+
+
+
+		
+	</script>
+</body>
+</html>
