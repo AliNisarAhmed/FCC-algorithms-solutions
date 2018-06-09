@@ -11,17 +11,195 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 
+function convertHTML(str) {
+  // &colon;&rpar;
+
+  // & => &amp;
+  // < => &lt;
+  // > => &gt;
+  //"" => &quot;
+  //' => &apos;
+
+
+  return str
+  				.replace(/&/g, '&amp;')
+  				.replace(/</g, '&lt;')
+  				.replace(/>/g, '&gt;')
+  				.replace(/"/g, '&quot;')
+  				.replace(/'/g, '&apos;');
+}
+
+console.log(convertHTML("Dolce & Gabbana"));
+console.log(convertHTML("Hamburgers < Pizza < Tacos"));
+console.log(convertHTML("Sixty > twelve"));
+console.log(convertHTML('Stuff in "quotation marks"'));
+console.log(convertHTML("Schindler's List"));
+
+
+
+//===============================================================================================
+
+/*
+
+// SORTED UNION - join the array keeping only unique items and maintaining order
+
+function uniteUnique(...arrs) {
+
+  let temp = new Set;
+  for(let subArr of arrs) {
+  	subArr.forEach(elem => {
+  		temp.add(elem);
+  	})
+  }
+
+  console.log([...temp]);
+}
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]);
+
+*/
+
+//==============================================================================================
+
+/*
+
+
+// FIND THE MISSING LETTERS
+
+
+function fearNotLetter(str) {
+	let temp = [...str];
+  for(let i = 1; i < temp.length; i++) {
+
+  	if(temp[i].charCodeAt(0) - temp[i - 1].charCodeAt(0) !== 1) {
+  		return String.fromCharCode((temp[i].charCodeAt(0) - 1));
+  	}
+  }
+}
+
+console.log(fearNotLetter("abce")); //returns 'd'
+
+console.log(fearNotLetter("abcdefghijklmnopqrstuvwxyz"));  //returns undefined
+
+
+
+*/
+
+
+//================================================================================================
+
+/*
+
+//  DNA PAIRING - Base pairs are a pair of AT and CG. Match the missing element to the provided character.
+
+// Return the provided character as the first element in each array.
+
+// For example, for the input GCG, return [["G", "C"], ["C","G"],["G", "C"]]
+
+function pairElement(str) {
+  let temp = [...str];
+  temp = temp.map(letter => {
+  	if(letter === 'G') {
+  		return ['G', 'C']
+  	} else if (letter === 'C') {
+  		return ['C', 'G'];
+  	} else if (letter === 'A') {
+  		return ['A', 'T'];
+  	} else {
+  		return ['T', 'A'];
+  	}
+  })
+  return temp;
+}
+
+pairElement("GCG");
+
+
+*/
+
+
+//==================================================================================================
+
+/*
+
+function myReplace(str, before, after) {
+  let temp = str.split(' ');
+
+  return temp
+  				.map(word => {
+  					if(word === before) {
+  						if(before[0] === before[0].toUpperCase()) {  // if the first letter of before is capital
+  							let [first, ...rest] = [...after];
+  							after = first.toUpperCase() + rest.join('');  //converting first letter of after to capital as well
+  							return after;
+  						} else {
+  							return after;
+  						}
+  					} else {
+  						return word;
+  					}
+  				})
+  				.join(' ');
+}
+
+console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped")); //returns jumped replaced by leaped
+
+
+console.log(myReplace("He is Sleeping on the couch", "Sleeping", "sitting")); //returns Sleeping replaced by Sitting
+
+*/
+
+//=============================================================================================
+
+/* 
+
+
+// PIG LATIN
+
+function translatePigLatin(str) {
+	if(/^[aeiou]/.test(str)) {
+		return str + 'way';
+	}
+
+  let consonants = [...str];
+  let i = 0;
+  let init = '';
+  while(!/[aeiou]/.test(consonants[i])) {
+  	init += consonants[i];
+  	i++;
+  }
+
+  for(let elem of init) {
+  	consonants.shift();
+  }
+
+  return consonants.join('') + init + 'ay';
+
+}
+
+console.log(translatePigLatin("california")); // should return "aliforniacay"
+
+console.log(translatePigLatin("algorithm")); //should return "algorithmway".
+
+*/
+
+
+
+
+
+
+//============================================================================================================================================
+
 
 /*
 
 // SPINAL TAP CASE - FCC
 
 function spinalCase(str) {
-	let prop = str.replace(/([A-Z])/g, ' $1');
-	prop = prop.split(/[\s\-_]/g);
+	let prop = str.replace(/([A-Z])/g, ' $1');  //splits camelCase and adds space before capital letter
+	prop = prop.split(/[\s\-_]/g);              // splits the string by 'space', '-' and/or '_'
 	return prop
-			.filter(word => word)
-			.map(word => word.toLowerCase())
+			.filter(word => word)               // removes empty strings that may have been created in above steps 
+			.map(word => word.toLowerCase())    
 			.join('-');
 	// console.log(prop);
 }
@@ -45,12 +223,12 @@ function whatIsInAName(collection, source) {
   // What's in a name?
   let arr = [];
 
-  let source_entries = Object.entries(source);
+  let source_entries = Object.entries(source);    // get the array of [key,value] pairs of source
 
   arr = collection.filter( obj => {
   	for(let [key, value] of source_entries) {
-  		if( !Object.keys(obj).includes(key) || !Object.values(obj).includes(value)) {
-  			return false;
+  		if( !Object.keys(obj).includes(key) || !Object.values(obj).includes(value)) {   // if in any obj, source key or source value is missing,
+  			return false;																																	// it is removed
   		}
   	}
   	return true;
@@ -92,11 +270,11 @@ console.log(urlSlug(globalTitle)); // Should be "winter-is-coming"
 
 
 
+*/
 
 
 
 
-		
 	</script>
 </body>
 </html>
