@@ -11,6 +11,308 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 
+// Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum.
+
+
+function addTogether(...args) {
+  if(Number.isNaN(args[0])) {
+  	return undefined;
+  } else {
+  	if(args[1]) {
+  		return args[0] + args[1];	
+  	} else {
+  	return x => {
+  		if(Number.isNaN(x)) {
+  			return undefined;
+  		} else {
+  			return x + args[0];
+  		}
+  	};
+  	}
+	}
+}
+  	
+console.log(addTogether(2, 3)); // should return 5.
+console.log(addTogether(2)(3)) // should return 5.
+console.log(addTogether("http://bit.ly/IqT6zt")) //should return undefined.
+console.log(addTogether(2, "3")); //should return undefined.
+console.log(addTogether(2)([3])); //should return undefined
+
+
+//==============================================================================
+
+/*
+
+// checks if pre is truthy on all elements (objects) of the collection array
+
+function truthCheck(collection, pre) {
+  // Is everyone being true?
+  return collection.every(obj => {
+  	return !!obj[pre];
+  });
+}
+
+console.log(truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex")); // returns true
+
+console.log(truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex")) //should return false.
+
+console.log(truthCheck([{"user": "Tinky-Winky", "sex": "male", "age": 0}, {"user": "Dipsy", "sex": "male", "age": 3}, {"user": "Laa-Laa", "sex": "female", "age": 5}, {"user": "Po", "sex": "female", "age": 4}], "age")) // should return false.
+
+console.log(truthCheck([{"name": "Pete", "onBoat": true}, {"name": "Repeat", "onBoat": true}, {"name": "FastFoward", "onBoat": null}], "onBoat")) // should return false
+
+console.log(truthCheck([{"name": "Pete", "onBoat": true}, {"name": "Repeat", "onBoat": true, "alias": "Repete"}, {"name": "FastFoward", "onBoat": true}], "onBoat")) // should return true
+
+console.log(truthCheck([{"single": "yes"}], "single")) //should return true
+
+console.log(truthCheck([{"single": ""}, {"single": "double"}], "single")) //should return false
+
+console.log(truthCheck([{"single": "double"}, {"single": undefined}], "single")) // should return false
+
+console.log(truthCheck([{"single": "double"}, {"single": NaN}], "single")) // should return false
+
+*/
+
+//===================================================================================
+ 
+/*
+
+// Return an English translated sentence of the passed binary str
+
+function binaryAgent(str) {
+  return str
+  			.split(' ')
+  			.map(binary => {
+  				return String.fromCharCode(parseInt(binary, 2));
+  			})
+  			.join('');
+}
+
+console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));  // returns "Aren't bonfires fun!?"
+
+*/
+
+//==========================================================================================
+
+/*
+
+
+// Flatten array - any depth
+
+function steamrollArray(arr) {
+  // I'm a steamroller, baby
+  return arr.reduce( (acc, val) => Array.isArray(val) ? acc.concat(steamrollArray(val)) : acc.concat(val), []);
+}
+
+console.log(steamrollArray([1, [2], [3, [[4]]]]));
+
+*/
+
+//============================================================================================
+
+/*
+
+// Keep dropping elements will the position func(element) returns true, return the remaining array from that point onwards, else return [];
+
+function dropElements(arr, func) {
+  // Drop them elements.
+  for(let elem of arr) {
+    if(func(elem)) {
+      return arr.slice(arr.indexOf(elem), );
+    }
+  }
+
+  return [];
+
+}
+
+console.log(dropElements([1, 2, 3, 4], function(n) {return n >= 3;})); //should return [3, 4].
+console.log(dropElements([0, 1, 0, 1], function(n) {return n === 1;}));// should return [1, 0, 1].
+console.log(dropElements([1, 2, 3], function(n) {return n > 0;}));// should return [1, 2, 3].
+console.log(dropElements([1, 2, 3, 4], function(n) {return n > 5;})); //should return [].
+console.log(dropElements([1, 2, 3, 7, 4], function(n) {return n > 3;})); //should return [7, 4].
+console.log(dropElements([1, 2, 3, 9, 2], function(n) {return n > 2;})); // should return [3, 9, 2].
+
+
+
+*/
+
+//===========================================================================================
+
+/*
+
+
+// *** FIND THE LCM of all the numbers between the given numbers (inclusive)
+
+function smallestCommons(arr) {
+
+  let arrLarge = arr[0] > arr[1]? arr[0]: arr[1];
+  let arrSmall = arr[0] < arr[1]? arr[0]: arr[1];
+
+  if(arrSmall === 1) {
+  	arrSmall += 1;
+  }
+
+  // console.log('arrSmall: ', arrSmall);
+  // console.log('arrLarge: ', arrLarge);
+
+
+  let populateArr = [];   
+
+  for(let i = arrSmall; i <= arrLarge; i++) {
+  	populateArr.push(i);
+  }
+
+  function generatePrimes(num) {
+  	let arr = [];
+  	let primes = [];
+  	for(let i = 2, j = 2; i <= num; i++, j++) {
+  		arr.push(i);
+  		primes.push(j);
+  	}
+  	arr.forEach(num => {
+  		primes = primes.filter(number => !(Number.isInteger(number / num) && Math.round(number / num >= 2)));  //Using Sieve method to generate primes upto and including num
+  	})
+
+  	return primes;
+	}
+
+
+  let primes = generatePrimes(arrLarge);
+
+  // Calculating prime factors in Obj form of each number in populateArr
+
+ 	let primeFactors = populateArr.map(num => {
+ 		let factors = {};
+ 		primes.forEach(prime => {
+ 			while(Number.isInteger(num / prime) && num !== 1) {
+ 				num /= prime;
+ 				if(factors[prime]) {
+ 					factors[prime] += 1;	
+ 				} else {
+ 					factors[prime] = 1;	
+ 				}
+ 				
+ 			}
+ 		})
+
+ 		return factors;
+ 		}
+ 	);
+
+ 	
+ 	// Reducing the prime factors obj to obtain only the highest power of each prime factor
+
+ 	let primeFactorsReduced = primeFactors.reduce( (acc, obj) => {
+ 		for(let [key, value] of Object.entries(obj)) {
+ 			if(acc[key]) {
+ 				if(obj[key] > acc[key]) {
+ 					acc[key] = value;
+ 				}
+ 			} else {
+ 				acc[key] = value;
+ 			}
+ 		}
+ 		return acc;
+ 	}, {})
+
+ 	
+ 	// calculating sum product of each prime factor and its power in the prime factor reduced obj
+
+ 	let answer = 1;
+
+ 	for(let [key, value] of Object.entries(primeFactorsReduced)) {
+ 		console.log('[key, value]: ', key, value)
+ 		answer *= Math.pow(Number(key), value);
+ 	}
+
+ 	return answer;
+}
+
+	
+
+console.log(smallestCommons([1,5]));   //returns 60
+
+console.log(smallestCommons([2, 10]));     // should return 2520.
+console.log(smallestCommons([1, 13]));   // should return 360360.
+console.log(smallestCommons([23, 18]));    // should return 6056820.
+
+*/
+
+// =======================================================================================
+
+/*
+
+
+// SUM of all PRIMES up to num
+
+function sumPrimes(num) {
+  
+  let arr = [];
+  let primes = [];
+
+  // debugger;
+
+  for(let i = 2, j = 2; i <= num; i++, j++) {
+  	arr.push(i);
+  	primes.push(j);
+  }
+
+  arr.forEach(num => {
+  	primes = primes.filter(number => !(Number.isInteger(number / num) && Math.round(number / num >= 2)));  //Using Sieve method to generate primes
+  })
+
+
+  return primes.reduce((a, x) => a + x, 0);
+
+
+}
+
+console.log(sumPrimes(10));  //return 17
+
+console.log(sumPrimes(977)); //should return 73156.
+
+*/
+
+
+//=====================================================================================
+
+/*
+
+
+// SUM OF All ODD FIBONACCI NUMBERS <= num
+
+function sumFibs(num) {
+  let fib = [1, 1];
+  let newEntry = 0;
+
+  // debugger;
+
+	while(true) {
+
+		newEntry = fib[fib.length - 1] + fib[fib.length - 2];
+		if(newEntry <= num) {
+			fib.push(newEntry);
+		} else {
+			break;
+		}
+	}
+
+  return fib
+  				.filter(num => num % 2 !== 0)
+  				.reduce((a, x) => a + x, 0);
+
+}
+
+console.log(sumFibs(4));  //returns 5
+console.log(sumFibs(4000000)); //should return 4613732.
+
+*/
+
+
+// ================================================================================================
+
+/*
+
 function convertHTML(str) {
   // &colon;&rpar;
 
@@ -35,7 +337,7 @@ console.log(convertHTML("Sixty > twelve"));
 console.log(convertHTML('Stuff in "quotation marks"'));
 console.log(convertHTML("Schindler's List"));
 
-
+*/
 
 //===============================================================================================
 
