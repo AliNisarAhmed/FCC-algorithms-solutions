@@ -11,7 +11,292 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 
+/*
 
+
+//===================================================================================
+
+
+// - INVENTORY UPDATE
+
+// Compare and update the inventory stored in a 2D array against a second 2D array of a fresh delivery. Update the current existing inventory item quantities (in arr1). If an item cannot be found, add the new item and quantity into the inventory array. The returned inventory array should be in alphabetical order by item.
+
+
+
+function updateInventory(arr1, arr2) {
+    // All inventory must be accounted for or you're fired!
+
+    let inventoryCount = arr1.length;
+
+    // debugger;
+    start: for(let item of arr2) {
+    	for(let i = 0; i < inventoryCount; i++) {
+    		if(arr1[i][1] === item[1]) {
+    			arr1[i][0] += item[0];
+    			continue start; // if the search is successful, we return to the next element
+    		}
+    	}
+    	arr1.push(item);
+    }
+
+    return arr1.sort((a, b) => {
+    	return a[1] < b[1] ? -1: a[1] === b[1] ? 0: 1;
+    });
+}
+
+// // Example inventory lists
+// var curInv = [
+//     [21, "Bowling Ball"],
+//     [2, "Dirty Sock"],
+//     [1, "Hair Pin"],
+//     [5, "Microphone"]
+// ];
+
+// var newInv = [
+//     [2, "Hair Pin"],
+//     [3, "Half-Eaten Apple"],
+//     [67, "Bowling Ball"],
+//     [7, "Toothpaste"]
+// ];
+
+console.log(updateInventory([[21, "Bowling Ball"], [2, "Dirty Sock"], [1, "Hair Pin"], [5, "Microphone"]], [[2, "Hair Pin"], [3, "Half-Eaten Apple"], [67, "Bowling Ball"], [7, "Toothpaste"]])); 
+
+//should return [[88, "Bowling Ball"], [2, "Dirty Sock"], [3, "Hair Pin"], [3, "Half-Eaten Apple"], [5, "Microphone"], [7, "Toothpaste"]]);
+
+console.log(updateInventory([[21, "Bowling Ball"], [2, "Dirty Sock"], [1, "Hair Pin"], [5, "Microphone"]], [])) // should return [[21, "Bowling Ball"], [2, "Dirty Sock"], [1, "Hair Pin"], [5, "Microphone"]].
+
+
+*/
+
+//===============================================================================================
+
+/*
+
+// - SYMMETRIC DIFFERENCE
+
+// Create a function that takes two or more arrays and returns an array of the symmetric difference (△ or ⊕) of the provided arrays.
+
+// Given two sets (for example set A = {1, 2, 3} and set B = {2, 3, 4}), the mathematical term "symmetric difference" of two sets is the set of elements which are in either of the two sets, but not in both (A △ B = C = {1, 4}). For every additional symmetric difference you take (say on a set D = {2, 3}), you should get the set with elements which are in either of the two the sets but not both (C △ D = {1, 4} △ {2, 3} = {1, 2, 3, 4}). The resulting array must contain only unique values (no duplicates).
+
+function sym(...args) {
+
+	function sym2(arr1, arr2) {
+		let combined = [...arr1, ...arr2];
+		let removed = Array.from(new Set(combined)).sort();
+		let unique = [];
+		removed.forEach(elem => {
+			if (!(arr1.includes(elem) && arr2.includes(elem))) {
+				unique.push(elem);
+			} 
+		});
+		return unique;
+	}
+
+
+	if (args.length === 2) {
+		return sym2(args[0], args[1]);
+	} else {
+		
+		let answer = args.reduce((acc, arr, i, arg) => {
+			if(i > 1) {
+				return acc = sym2(acc, arr);
+			} else if (i === 0) {
+				return acc = sym2(arr, arg[i + 1]);
+			} else {
+				return acc;
+			}
+		}, [])
+
+		return answer;
+	}
+}
+
+console.log(sym([1, 2, 3], [5, 2, 1, 4])) // should return [3, 4, 5].
+
+console.log(sym([1, 2, 3, 3], [5, 2, 1, 4])) // should return [3, 4, 5].
+
+console.log(sym([1, 2, 3], [5, 2, 1, 4, 5]))// should return [3, 4, 5].
+
+console.log(sym([1, 2, 5], [2, 3, 5], [3, 4, 5]))// should return [1, 4, 5]
+
+
+console.log(sym([1, 1, 2, 5], [2, 2, 3, 5], [3, 4, 5, 5]))// should return [1, 4, 5].
+
+console.log(sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3]))// should return [2, 3, 4, 6, 7].
+
+console.log(sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]))// should return [1, 2, 4, 5, 6, 7, 8, 9].
+
+*/
+
+//=======================================================================================
+
+/*
+
+// - CASH REGISTER
+
+// Design a cash register drawer function checkCashRegister() that accepts purchase price as the first argument (price), payment as the second argument (cash), and cash-in-drawer (cid) as the third argument.
+
+// cid is a 2D array listing available currency.
+
+// The checkCashRegister() function should always return an object with a status key and a change key.
+
+// Return {status: "INSUFFICIENT_FUNDS", change: []} if cash-in-drawer is less than the change due, or if you cannot return the exact change.
+
+// Return {status: "CLOSED", change: [...]} with cash-in-drawer as the value for the key change if it is equal to the change due.
+
+// Otherwise, return {status: "OPEN", change: [...]}, with the change due in coins and bills, sorted in highest to lowest order, as the value of the change key.
+
+// Penny	$0.01 (PENNY)
+// Nickel	$0.05 (NICKEL)
+// Dime	$0.1 (DIME)
+// Quarter	$0.25 (QUARTER)
+// Dollar	$1 (DOLLAR)
+// Five Dollars	$5 (FIVE)
+// Ten Dollars	$10 (TEN)
+// Twenty Dollars	$20 (TWENTY)
+// One-hundred Dollars	$100 (ONE HUNDRED)
+
+
+
+function checkCashRegister(price, cash, cid) {
+
+	const currencyObject = {
+		PENNY: 0.01,
+		NICKEL: 0.05,
+		DIME: 0.1,
+		QUARTER: 0.25,
+		ONE: 1,
+		FIVE: 5,
+		TEN: 10,
+		TWENTY: 20,
+		"ONE HUNDRED": 100,		
+	}
+
+	function addValuesAndCoins(cid) {
+
+		return cid.map(arr => {
+			return [...arr, currencyObject[arr[0]], Math.round(arr[1] / currencyObject[arr[0]]) ]; 
+			});
+	}
+
+	function calculateCashAvailable (cid) {
+		if (cid) {
+			return parseFloat(cid.reduce((acc, arr) => {
+				return acc += arr[1];
+			}, 0).toFixed(2));
+			
+		}
+	}
+
+	function calculateChangeArray(changeDue, cid) {
+
+		let convertedArr = addValuesAndCoins(cid);
+
+		let changeTobeChecked = changeDue;
+
+		// console.log("convertedArr: ", convertedArr)
+
+		let changeArr =  convertedArr.reverse().reduce((acc, arr) => {
+
+			if (changeDue === 0 || changeDue < arr[2] || arr[1] === 0) {
+				return acc;
+			} else if (changeDue >= arr[1]) {
+				changeDue = changeDue - arr[1];
+				changeDue = parseFloat(changeDue.toFixed(2));
+				acc.push(arr);
+				return acc;
+			} else if (changeDue < arr[1] && changeDue >= arr[2]) {
+				let coins = Math.floor(changeDue / arr[2]);
+				changeDue = changeDue - (coins * arr[2]);
+				changeDue = parseFloat(changeDue.toFixed(2));
+				let temp = [arr[0], coins * arr[2], arr[2], coins];
+				acc.push(temp);
+				return acc;
+			}
+
+		}, []);
+
+		// console.log("ChangeArr within function", changeArr);
+		
+		let cashInChange = calculateCashAvailable(changeArr);
+
+		// console.log('abc', cashInChange)
+
+		if (cashInChange === changeTobeChecked) {
+			return changeArr;
+		} else {
+			return false;
+		}
+	}
+
+	function convertToFormat(changeArray) {
+		if(changeArray) {
+
+			return changeArray.map(arr => [arr[0], arr[1]]);
+		
+		}
+	}
+
+	
+	let changeDue = parseFloat((cash - price).toFixed(2));			
+	
+
+	let cashInDrawer = calculateCashAvailable(cid);
+	// console.log("cashInDrawer: ", cashInDrawer);
+	
+	// console.log("changeDue: ", changeDue);
+
+
+	let changeArray = calculateChangeArray(changeDue, cid);
+	// console.log("changeArray: ", changeArray);
+
+	// console.log("Cash In Change: ", calculateCashAvailable(calculateChangeArray(changeDue, cid)));
+	
+	// console.log("Cash Remaining: ", calculateCashAvailable(cid) - changeDue);
+
+	// console.log("==========================================")
+	
+
+	
+	if (changeArray) {
+		if (changeDue > cashInDrawer) {
+			return {
+				status : "INSUFFICIENT_FUNDS", 
+				change: [],	
+			};
+		} else if (changeDue === cashInDrawer) {
+			return {
+				status: "CLOSED",
+				change: cid,
+			};
+		} else {
+			return {
+				status: "OPEN",
+				change: convertToFormat(calculateChangeArray(changeDue, cid)),
+			};
+		}
+
+	} else {
+		return {
+				status : "INSUFFICIENT_FUNDS", 
+				change: [],	
+			};	
+	}
+
+}
+
+
+console.log(checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])) //should return {status: "OPEN", change: [["QUARTER", 0.5]]}
+
+console.log(checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])) //should return {status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]}
+
+console.log(checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])) //should return {status: "INSUFFICIENT_FUNDS", change: []}
+
+
+console.log(checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])) // should return {status: "CLOSED", change: [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]}
+
+
+*/
 
 
 //============================================================================================
