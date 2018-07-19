@@ -11,11 +11,183 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 
+
+//  ==== PAIRWISE ====
+
 /*
 
+Given an array arr, find element pairs whose sum equal the second argument arg and return the sum of their indices.
 
-//===================================================================================
+You may use multiple pairs that have the same numeric elements but different indices. Each pair should use the lowest possible available indices. Once an element has been used it cannot be reused to pair with another element. For instance, pairwise([1, 1, 2], 3) creates a pair [2, 1] using the 1 at indice 0 rather than the 1 at indice 1, because 0+2 < 1+2.
 
+For example pairwise([7, 9, 11, 13, 15], 20) returns 6. The pairs that sum to 20 are [7, 13] and [9, 11]. We can then write out the array with their indices and values.
+
+Index	0	1	2	3	4
+Value	7	9	11	13	15
+Below we'll take their corresponding indices and add them.
+
+7 + 13 = 20 → Indices 0 + 3 = 3
+9 + 11 = 20 → Indices 1 + 2 = 3
+3 + 3 = 6 → Return 6
+
+*/
+
+/*
+
+function pairwise(arr, arg) {
+
+	// debugger;
+
+	let answer = 0;
+
+	// To remember the original indices of the input array, we map the array to an array of objects {index: x, value: y}
+	let temp = arr.map((elem, i) => ( {index: i, value: elem} ));
+
+	// debugger;
+
+	first:while(temp.length > 1) {
+		for(let i = 0; i < temp.length; i++) {
+			for(let j = i + 1; j < temp.length; j++) {
+
+				if(temp[i].value + temp[j].value === arg ) {  // if the sum of two numbers is equal to arg
+
+					answer += temp[i].index + temp[j].index;
+					temp = removeTwoElements(temp, i, j);
+					continue first;  // we modify the temp and go back to the while loop with new temp array of objects					
+				}
+			}
+		}
+		break;  // if no obj matches the condition, we exit the while loop
+	}
+
+	return answer;
+
+	// HELPER FUNCION
+	function removeTwoElements(arr, ind1, ind2) {  // returns an array (without modifing input) with 2 elements at given indices removed
+		return arr.filter((elem, i) => i !== ind1 && i !== ind2);
+	}
+}
+
+
+
+
+console.log(pairwise([1, 1, 2], 3));  //return 2
+console.log(pairwise([1, 4, 2, 3, 0, 5], 7))// should return 11.
+console.log(pairwise([1, 3, 2, 4], 4))// should return 1.
+console.log(pairwise([1, 1, 1], 2))// should return 1.
+console.log(pairwise([0, 0, 0, 0, 1, 1], 1))// should return 10.
+console.log(pairwise([], 100))// should return 0.
+
+*/
+
+//========================================================================================================================================================
+
+
+// - No Repeats Please ***
+
+// Return the number of total permutations of the provided string that don't have repeated consecutive letters. Assume that all characters in the provided string are each unique.
+
+// For example, aab should return 2 because it has 6 total permutations (aab, aab, aba, aba, baa, baa), but only 2 of them (aba and aba) don't have the same letter (in this case a) repeating.
+
+/*
+
+function permAlone(str) {  // for example 'abc'
+  
+	// We start by calculating the total number of permutations of the input string, this is achieved by the permuations function defined below	
+
+
+	let perms = permutations(str);
+
+
+	perms = perms.filter( (str, i) => {
+		for(let i = 0; i < str.length; i++) {
+			if(str[i] === str[i + 1]) {
+				return false
+			}
+		}
+		return true;
+	})  
+
+	return perms.length;
+ 
+
+	 function permutations(str) {  // this function takes a string and returns an array of all permutations
+
+	 	// This function was not written by me, this is copied from a comment on StackOverFlow, the function uses recursion to calculate all the permutations
+		// Better and faster algo's exist to calculate all permuations, however, below is the easier es6 version
+
+	 	let inputArray = [...str];
+	 	let result = [];
+
+	 	function permute(arr, m = []) {
+	 	  if (arr.length === 0) {
+	 	  	result.push(m);
+	 	  }	else {
+	 	  	for (let i = 0; i < arr.length; i++) {
+	 	  		let curr = arr.slice();
+	 	  		let next = curr.splice(i, 1);  // This changes curr and next at once, ith element of curr is put as next and removed from curr
+	 	  		permute(curr.slice(), m.concat(next))
+	 	  	}
+	 	  }
+	 	}
+
+	 	// This is how the permute function works
+
+	 	// for an input arr of ['a', 'b', 'c']
+
+	 	// permute([a, b, c])
+
+	 		// permute([b, c], [a])
+
+	 			// permute([c], [a, b])
+
+	 				// permute([], [a, b, c]) 
+
+	 					// returns [a, b, c]; result([ [a, b, c] ])
+
+		 		// permute([b], [a, c])
+
+		 			// permute([], [a, c, b])
+
+		 				// return [a, c, b]; result = [ [a, b, c], [a, c, b]]
+
+
+			// permute([a, c], [b])
+
+			 	// permute([c], [b, a])
+
+			 		// permute([], [b, a, c])
+
+			 		  // return [b, a, c]; result = [ [abc], [acb], [bac]]
+
+			 	// permute([a], [b, c])
+
+			 		// permute([], [b, c, a])
+
+			 			// return [b, c, a]; result = [ [abc], [acb], [bac], [bca] ]
+
+
+
+
+
+	 	permute(inputArray);
+	 	return result.map(arr => arr.join(''));
+	 }
+
+}
+
+
+console.log(permAlone('aab'))
+
+*/
+
+// console.log(permAlone('aab'));
+// console.log(permAlone("aabb")); //should return 8
+// console.log(permAlone("abcdefa"))// should return 3600.
+
+//============================================================================================================================================
+
+/*
 
 // - INVENTORY UPDATE
 
@@ -297,7 +469,6 @@ console.log(checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME",
 
 
 */
-
 
 //============================================================================================
 
