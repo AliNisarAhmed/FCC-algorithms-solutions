@@ -12,6 +12,54 @@
 //-----------------------------------------------------------------------------------------------------------------------------------
 
 
+//  ========  BUBBLE SORT  ==========
+
+// Here we will see bubble sort. The bubble sort method starts at the beginning of an unsorted array and 'bubbles up' unsorted values towards the end, iterating through the array until it is completely sorted. It does this by comparing adjacent items and swapping them if they are out of order. The method continues looping through the array until no swaps occur at which point the array is sorted.
+
+// This method requires multiple iterations through the array and for average and worst cases has quadratic time complexity. While simple, it is usually impractical in most situations.
+
+// Instructions: Write a function bubbleSort which takes an array of integers as input and returns an array of these integers in sorted order from least to greatest
+
+/*
+
+function bubbleSort(arr) {
+	let swaps; // a global flag that keeps track if any swaps occured during a pass	
+
+	// debugger;
+
+	do {
+
+		swaps = false;
+		arr = arr.reduce( (acc, x) => {  // each 'reduce' cycle is a 'pass' through the array, sorting as it finds 
+
+			let lastElement = acc[acc.length - 1];
+
+			if (lastElement && lastElement > x) {
+				swaps = true;
+				[lastElement, x] = [x, lastElement];   // swaps lastElement and x, now x === lastElement and viceversa
+				acc[acc.length - 1] = lastElement;  // we make the last array element equal to x 
+				acc.push(x);  // x, which was the last element, now pushed at the end of the acc
+
+			} else {
+				acc.push(x)
+			}
+
+			return acc;
+
+		}, []);
+
+	} while (swaps);
+
+	return arr;
+
+}
+
+
+console.log(bubbleSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
+
+*/
+
+
 //  ==== PAIRWISE ====
 
 /*
