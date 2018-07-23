@@ -11,6 +11,93 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 
+// ============= INSERTION SORT ===================
+
+// The next sorting method we'll look at is insertion sort. This method works by building up a sorted array at the beginning of the list. It begins the sorted array with the first element. Then it inspects the next element and swaps it backwards into the sorted array until it is in sorted position. It continues iterating through the list and swapping new items backwards into the sorted portion until it reaches the end. This algorithm has quadratic time complexity in the average and worst cases.
+
+// Instructions: Write a function insertionSort which takes an array of integers as input and returns an array of these integers in sorted order from least to greatest.
+
+/*
+
+
+function insertionSort(arr) {
+	// debugger;
+
+	arr = arr.reduce( (acc, x, i) => {
+		if (acc.length === 0) {
+			acc.push(x);
+			return acc;
+		}
+
+		for(let i = acc.length - 1; i >= 0; i--) {
+			if(acc[i] <= x) {
+				// insert x
+				acc.splice(i + 1, 0, x);
+				return acc;
+			}
+		}
+
+	}, []);
+
+	return arr;
+
+}
+
+
+console.log(insertionSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
+
+
+*/
+
+
+//=========================================================================================================================================================================
+
+
+// =============  SELECTION SORT ===================
+
+
+// Here we will implement selection sort. Selection sort works by selecting the minimum value in a list and swapping it with the first value in the list. It then starts at the second position, selects the smallest value in the remaining list, and swaps it with the second element. It continues iterating through the list and swapping elements until it reaches the end of the list. Now the list is sorted. Selection sort has quadratic time complexity in all cases.
+
+// Instructions: Write a function selectionSort which takes an array of integers as input and returns an array of these integers in sorted order from least to greatest.
+
+/*
+
+function selectionSort(arr) {
+	let copy = arr.slice();
+
+	// debugger;
+
+	for(let i = 0, length = arr.length; i < length; i++) {
+		let incl = copy.slice(0, i + 1);  // sliced upto and including the 'ith' element
+		let rem = copy.slice(i + 1);  //sliced after the 'ith' element
+		let [min, index] = findMinWithIndex(rem); // returns an array [minimum, index of minimum]
+
+		if (min < copy[i]) {
+			[incl[incl.length - 1], rem[index]] = [rem[index], incl[incl.length - 1]];  // swap the last elem of incl with the min of rem
+			copy = incl.concat(rem);  // combine the incl and rem to form the copy array again
+		}
+		
+	}
+
+	return copy;
+
+	function findMinWithIndex(arr) {
+		let min = Math.min(...arr);
+		let index = arr.indexOf(min);
+		return [min, index];
+	}
+}
+
+
+console.log(selectionSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
+
+
+*/
+
+
+// =======================================================================================================================================================================
+
+
 
 //  ========  BUBBLE SORT  ==========
 
@@ -36,9 +123,8 @@ function bubbleSort(arr) {
 
 			if (lastElement && lastElement > x) {
 				swaps = true;
-				[lastElement, x] = [x, lastElement];   // swaps lastElement and x, now x === lastElement and viceversa
-				acc[acc.length - 1] = lastElement;  // we make the last array element equal to x 
-				acc.push(x);  // x, which was the last element, now pushed at the end of the acc
+				[acc[acc.length - 1], x] = [x, acc[acc.length - 1]];
+				acc.push(x);
 
 			} else {
 				acc.push(x)
@@ -57,8 +143,8 @@ function bubbleSort(arr) {
 
 console.log(bubbleSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
 
-*/
 
+*/
 
 //  ==== PAIRWISE ====
 
@@ -574,7 +660,7 @@ console.log('false ', telephoneCheck("(555)5(55?)-5555"))// should return false.
 function palindrome(str) {
   let temp = str.replace(/[\W_]/g, '').toLowerCase(); // to remove all non-alphaneumeric characters
   console.log(temp);
-  return [...temp].reverse().join('') === temp ? true: false;
+  return [...temp].reverse().join('') === temp;
 }
 
 
