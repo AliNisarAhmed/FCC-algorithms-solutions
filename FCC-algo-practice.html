@@ -11,6 +11,142 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 
+// ======================================================================================================================================================================================================
+
+
+//  ============  Multi Map  ======================
+
+/*
+
+// Construct a function multiMap that will accept two arrays: an array of values and an array of callbacks. multiMap will return an object whose keys match the elements in the array of values. The corresponding values that are assigned to the keys will be arrays consisting of outputs from the array of callbacks, where the input to each callback is the key.
+
+function multiMap(arrVal, arrCall) {
+
+  return arrVal.reduce((acc, item, i) => {
+    acc[item] = [];
+    arrCall.forEach(func => {
+      acc[item].push(func(item));
+    });
+    return acc;
+  }, {})
+}
+
+
+console.log(
+  multiMap(
+    ['catfood', 'glue', 'beer'], 
+    [
+      function(str) { return str.toUpperCase(); },
+      function(str) { return str[0].toUpperCase() + str.slice(1).toLowerCase(); },
+      function(str) { return str + str; }
+    ]
+  )
+);
+// should log: { catfood: ['CATFOOD', 'Catfood', 'catfoodcatfood'], glue: ['GLUE', 'Glue', 'glueglue'], beer: ['BEER', 'Beer', 'beerbeer'] }
+
+
+*/
+
+// ======================================================================================================================================================================================================
+
+
+/*
+
+//  ================  Object of Matches  =============================
+
+// Construct a function objOfMatches that accepts two arrays and a callback. objOfMatches will build an object and return it. To build the object, objOfMatches will test each element of the first array using the callback to see if the output matches the corresponding element (by index) of the second array. If there is a match, the element from the first array becomes a key in an object, and the element from the second array becomes the corresponding value.
+
+
+
+function objOfMatches(array1, array2, callback) {
+  return array1.reduce((acc, item, i) => {
+    if (array2[i] === callback(item)) {
+      acc[item] = array2[i];
+    }
+    return acc;
+  }, {})
+}
+
+console.log(objOfMatches(['hi', 'howdy', 'bye', 'later', 'hello'], ['HI', 'Howdy', 'BYE', 'LATER', 'hello'], function(str) { return str.toUpperCase(); }));
+// should log: { hi: 'HI', bye: 'BYE', later: 'LATER' }
+
+
+
+*/
+
+// ==========================================================================================================================================================================================================
+
+/*
+
+
+// ============  Union  ================================
+
+// Construct a function union that compares input arrays and returns a new array that contains all elements. If there are duplicate elements, only add it once to the new array. Preserve the order of the elements starting from the first element of the first input array. BONUS: Use reduce!
+
+
+
+function union(...arrays) {
+  return arrays.reduce((acc, array) => {
+    array.forEach(item => {
+      if (!acc.includes(item)) {
+        acc.push(item);
+      } 
+    });
+    return acc;
+  }, arrays[0])
+}
+
+
+
+console.log(union([5, 10, 15], [15, 88, 1, 5, 7], [100, 15, 10, 1, 5]));
+// should log: [5, 10, 15, 88, 1, 7, 100]
+
+
+*/
+
+// ==========================================================================================================================================================================================================
+
+
+// =============  Intersection  =======================
+
+/*
+
+
+// Construct a function intersection that compares input arrays and returns a new array with elements found in all of the inputs. BONUS: Use reduce!
+
+
+function intersection(...arrays) {
+  // debugger;
+  return arrays.reduce((acc, array) => {
+    let temp = acc.slice();
+    acc.forEach((item, i) => {
+      if (!array.includes(item)) {
+        temp = temp.filter(elem => elem !== item);
+      }
+    });
+    return temp;
+  }, arrays[0])
+}
+
+
+console.log(intersection([5, 10, 15, 20], [15, 88, 1, 5, 7, 20], [1, 10, 15, 5, 20]));
+// should log: [5, 15]
+
+
+*/
+
+
+
+// =========================================================================================================================================================================================================
+
+// =============  Merge Sort ====================
+
+
+
+
+
+// ==================================================================================================================================================================================================================
+
 
 // =============  Quick Sort  ======================
 
