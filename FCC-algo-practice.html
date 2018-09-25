@@ -365,36 +365,54 @@ console.log(quickSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1
 // Instructions: Write a function insertionSort which takes an array of integers as input and returns an array of these integers in sorted order from least to greatest.
 
 
-
+/*
 
 function insertionSort(arr) {
-	// debugger;
+  // debugger;
+  
+  // I am not sure about the space complexity of my solution. I am creating multiple arrays inside the reduce (acc)
 
 	return arr.reduce( (acc, x, i) => {
     
-    console.log('accumulator', acc, i)
-    if (acc.length === 0) {
-			acc.push(x);
-			return acc;
-		}
-
 		for(let i = acc.length - 1; i >= 0; i--) {
-			if(acc[i] <= x) {
+			if(acc[i] && acc[i] <= x) {
 				// insert x
         acc.splice(i + 1, 0, x);
         return acc;
 			}
     }
 
-    acc.splice(0, 0, x);
+    // if the above for loop completed without triggering the if clause, this means that the element x is the smallest so far and must come first in the array.
+    acc.unshift(x);   // There is choice between unshift and splice here
     return acc;
 
-	}, []);
-
+  }, []);
+  
 }
 
 
-console.log('from insertion sort: ', insertionSort([4, 2, 8, 345, 1, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
+*/
+
+/*
+
+ // A much simpler 2x for loop solution is also mentioned below: from FRONTENDMASTERS Course
+ function insertionSort(arr) {
+  //  debugger;
+    for (let i = 1; i < arr.length; i++) {
+      for (let j = 0; j < i; j++) {
+        if (arr[i] < arr[j]) {
+          const spliced = arr.splice(i, 1);   // This removes the ith element from arr temporarily and returns it
+          arr.splice(j, 0, spliced[0])   // This puts the above removed element at the jth index.
+        }
+      }
+    }
+    return arr;
+  }
+
+*/
+
+
+// console.log('from insertion sort: ', insertionSort([4, 2, 8, 345, 1, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
 
 
 
