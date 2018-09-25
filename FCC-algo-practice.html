@@ -364,14 +364,16 @@ console.log(quickSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1
 
 // Instructions: Write a function insertionSort which takes an array of integers as input and returns an array of these integers in sorted order from least to greatest.
 
-/*
+
 
 
 function insertionSort(arr) {
 	// debugger;
 
 	return arr.reduce( (acc, x, i) => {
-		if (acc.length === 0) {
+    
+    console.log('accumulator', acc, i)
+    if (acc.length === 0) {
 			acc.push(x);
 			return acc;
 		}
@@ -379,20 +381,23 @@ function insertionSort(arr) {
 		for(let i = acc.length - 1; i >= 0; i--) {
 			if(acc[i] <= x) {
 				// insert x
-				acc.splice(i + 1, 0, x);
-				return acc;
+        acc.splice(i + 1, 0, x);
+        return acc;
 			}
-		}
+    }
+
+    acc.splice(0, 0, x);
+    return acc;
 
 	}, []);
 
 }
 
 
-console.log(insertionSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
+console.log('from insertion sort: ', insertionSort([4, 2, 8, 345, 1, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
 
 
-*/
+
 
 
 //=========================================================================================================================================================================
