@@ -46,21 +46,20 @@ function largestPrimeFactor(num) {
 	let primeFactors = [];
 
 	while(num > 1) {
-		let currentPrime = it.next();
+		let currentPrime = it.next().value;
 		while(num % currentPrime === 0 && num > 1) {
 			primeFactors.push(currentPrime);
 			num = num / currentPrime;
 		}
-	}
-
-	console.log(primeFactors);
-	
+  }
+  console.log(primeFactors);
+	return Math.max(...primeFactors);
 }
 
 
 console.log(largestPrimeFactor(75));  
-// console.log(largestPrimeFactor(13195))  // 29;
-// console.log(largestPrimeFactor(600851475143))  // 6857;
+console.log(largestPrimeFactor(13195))  // 29;
+console.log(largestPrimeFactor(600851475143))  // 6857;
 
 
 
