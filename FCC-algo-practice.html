@@ -14,33 +14,52 @@
 // ======================================================================================================================================================================================================
 
 
+
+
 // Project Euler: Problem 3: Largest prime factor
 // The prime factors of 13195 are 5, 7, 13 and 29.
 
 // What is the largest prime factor of the number 600851475143 ?
 
 function largestPrimeFactor(num) {
-	
-	let primeFactors = [];
-	let i = 2;
-	while(num % i !== 0) {
-		
-		let result = num / i;
 
-		if (result % parseInt(result, 10) === 0) {
-			num = result;
-			primeFactors.push(i);
-		} else {
-			i++;
+	function *primeGenerator() {
+		// debugger;
+		function addNextPrime (arrayOfPrimes) {
+			// debugger; 	
+			let nextNum = arrayOfPrimes[arrayOfPrimes.length - 1] + 1;
+			while (arrayOfPrimes.some(prime => nextNum % prime === 0)) {  // this condition means => while there is at least one prime for which it is true that nextNum is divisible by it, we keep moving to the next number, since the current one cannot be a prime. As soon as this test fails, we know that no prime in the current list managed to divide the new number, hence this new number must be a prime.
+				nextNum++;
+			}
+			return arrayOfPrimes.concat(nextNum);
+		}	
+		let primes = [2];
+		while(true) {
+			yield primes[primes.length - 1];
+			primes = addNextPrime(primes);
 		}
 	}
 
-	return primeFactors;
+	
+	let it = primeGenerator();
 
+	let primeFactors = [];
+
+	while(num > 1) {
+		let currentPrime = it.next();
+		while(num % currentPrime === 0 && num > 1) {
+			primeFactors.push(currentPrime);
+			num = num / currentPrime;
+		}
+	}
+
+	console.log(primeFactors);
+	
 }
 
 
-console.log(largestPrimeFactor(13195))  // 29;
+console.log(largestPrimeFactor(75));  
+// console.log(largestPrimeFactor(13195))  // 29;
 // console.log(largestPrimeFactor(600851475143))  // 6857;
 
 
@@ -258,8 +277,6 @@ console.log(intersection([5, 10, 15, 20], [15, 88, 1, 5, 7, 20], [1, 10, 15, 5, 
 
 // =============  Merge Sort ====================
 
-// aka Stitching algorithm  - this algo is stable (unike QuickSort), meaning it maintains the order of elements, which is sometimes important.
-
 
 /*
 
@@ -366,58 +383,35 @@ console.log(quickSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1
 
 // Instructions: Write a function insertionSort which takes an array of integers as input and returns an array of these integers in sorted order from least to greatest.
 
-
 /*
 
+
 function insertionSort(arr) {
-  // debugger;
-  
-  // I am not sure about the space complexity of my solution. I am creating multiple arrays inside the reduce (acc)
+	// debugger;
 
 	return arr.reduce( (acc, x, i) => {
-    
+		if (acc.length === 0) {
+			acc.push(x);
+			return acc;
+		}
+
 		for(let i = acc.length - 1; i >= 0; i--) {
-			if(acc[i] && acc[i] <= x) {
+			if(acc[i] <= x) {
 				// insert x
-        acc.splice(i + 1, 0, x);
-        return acc;
+				acc.splice(i + 1, 0, x);
+				return acc;
 			}
-    }
+		}
 
-    // if the above for loop completed without triggering the if clause, this means that the element x is the smallest so far and must come first in the array.
-    acc.unshift(x);   // There is choice between unshift and splice here
-    return acc;
+	}, []);
 
-  }, []);
-  
 }
 
 
-*/
+console.log(insertionSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
 
-/*
-
- // A much simpler 2x for loop solution is also mentioned below: from FRONTENDMASTERS Course
- function insertionSort(arr) {
-  //  debugger;
-    for (let i = 1; i < arr.length; i++) {
-      for (let j = 0; j < i; j++) {
-        if (arr[i] < arr[j]) {
-          const spliced = arr.splice(i, 1);   // This removes the ith element from arr temporarily and returns it
-          arr.splice(j, 0, spliced[0])   // This puts the above removed element at the jth index.
-        }
-      }
-    }
-    return arr;
-  }
 
 */
-
-
-// console.log('from insertion sort: ', insertionSort([4, 2, 8, 345, 1, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
-
-
-
 
 
 //=========================================================================================================================================================================
