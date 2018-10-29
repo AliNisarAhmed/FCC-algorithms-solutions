@@ -21,6 +21,9 @@
 
 // What is the largest prime factor of the number 600851475143 ?
 
+
+/*
+
 function largestPrimeFactor(num) {
 
 	function *primeGenerator() {
@@ -61,7 +64,7 @@ console.log(largestPrimeFactor(75));
 console.log(largestPrimeFactor(13195))  // 29;
 console.log(largestPrimeFactor(600851475143))  // 6857;
 
-
+*/
 
 
 // ======================================================================================================================================================================================================
@@ -137,13 +140,36 @@ console.log(multiplesOf3and5(10));   // 23;
 // Implement a function to determine the state of the doors after the last pass. Return the final result in an array, with only the door number included in the array if it is open.
 
 
-function getFinalOpenDoors (numDoors) {
-	let result = [];
-
-	for(let i = 1; i <= numDoors; i++) {
-		
-	}
+function getFinalOpenedDoors (numDoors) {  // this is in effect getting all the squares below numDoors e.g. [1, 4, 9, 16] for numDoors = 16
+  let arr = Array(numDoors).fill(false);
+  let step = 1;
+  while (step <= numDoors) {  // The main logic, going through the array, flipping doors along the way
+    arr = arr.map((val, i) => {
+      if ((i + 1) % step === 0) {
+        return !val;
+      }
+      return val;
+    });
+    step++;
+  }
+  return arr
+  	.reduce((acc, x, i) => {
+  		if (x) {
+  			acc.push(i + 1);
+  		}
+  		return acc;
+  	}, []);
 }
+
+console.log(getFinalOpenedDoors(2));
+console.log(getFinalOpenedDoors(3));
+console.log(getFinalOpenedDoors(4));
+console.log(getFinalOpenedDoors(5));
+console.log(getFinalOpenedDoors(6));
+console.log(getFinalOpenedDoors(7));
+console.log(getFinalOpenedDoors(8));
+console.log(getFinalOpenedDoors(9));
+console.log(getFinalOpenedDoors(16));
 
 
 // ======================================================================================================================================================================================================
