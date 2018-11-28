@@ -1,0 +1,24 @@
+{
+  "name": "FCC-algorithms-solutions",
+  "version": "1.0.0",
+  "description": "Algorithms solved on FCC (or interesting problems from other resources) for future reference and improvement.",
+  "main": "codeSignal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliNisarAhmed/FCC-algorithms-solutions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AliNisarAhmed/FCC-algorithms-solutions/issues"
+  },
+  "homepage": "https://github.com/AliNisarAhmed/FCC-algorithms-solutions#readme",
+  "dependencies": {
+    "parcel-bundler": "^1.10.3"
+  }
+}
