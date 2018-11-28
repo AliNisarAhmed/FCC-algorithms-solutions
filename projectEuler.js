@@ -1,4 +1,62 @@
 
+
+//========================================================================================================================
+
+// Project Euler - Problem 4: Largest Palindrome Product
+
+// A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+// Find the largest palindrome made from the product of two n-digit numbers.
+
+/*
+
+function largestPalindromeProduct (n) {
+  let num1 = new Array(n).fill('9').join('');
+
+  num1 = Number(num1);
+  let num2Start = num1Start = num2 = num1;
+
+  // console.log('num1 start: ', num1);
+  // console.log('num2 start: ', num2);
+  let output = {};
+
+  // console.log(checkForPalindrome(9009));
+
+  while (num1 > num1Start - 100) {
+    while (num2 > num2Start - 100 ) {
+      let result = num1 * num2;
+      if (checkForPalindrome(result)) {
+        if (!output.result || output.result < result) {
+          output = {
+            result,
+            num1,
+            num2
+          }
+        }
+      }
+      num2--;
+    }
+    num2 = num2Start;
+    num1--;
+  }
+  return output.result;
+
+
+  function checkForPalindrome (num) {
+    return String(num) === [...String(num)].reverse().join('');
+  }
+}
+
+*/
+
+// console.log(largestPalindromeProduct(1))  // 9009
+// console.log(largestPalindromeProduct(2))  // 9009
+// console.log(largestPalindromeProduct(3))  // 906609
+// console.log(largestPalindromeProduct(4))  // 99000099
+
+
+
+
 //========================================================================================================================
 
 // Project Euler: Problem 3: Largest prime factor
@@ -6,6 +64,8 @@
 // The prime factors of 13195 are 5, 7, 13 and 29.
 
 // What is the largest prime factor of the number 600851475143 ?
+
+/*
 
 function largestPrimeFactor (num) {
   let primeFactors = [];
@@ -36,6 +96,8 @@ function largestPrimeFactor (num) {
     return listOfPrimes.concat(nextNum); 
   }
 }
+
+*/
 
 
 // console.log(largestPrimeFactor(75));  // 5  
