@@ -58,5 +58,47 @@ describe("testing Set", () => {
     set2.add(4)
     let result = set1.intersection(set2);
     expect(result.collection).toEqual([2, 3]);
-  })
+  });
+
+  test("performs set difference correctly", () => {
+    let set1 = new Set();
+    set1.add(1);
+    set1.add(2);
+    set1.add(3);
+    let set2 = new Set();
+    set2.add(2);
+    set2.add(3);
+    set2.add(4);
+    let result = set1.difference(set2);
+    expect(result).toEqual([1]);
+  });
+
+  test("performs sebset check correctly", () => {
+    let set1 = new Set();
+    set1.add(1);
+    set1.add(2);
+    set1.add(3);
+    let set2 = new Set();
+    set2.add(1);
+    set2.add(2);
+    set2.add(3);
+    set2.add(4);
+    let result = set1.subset(set2);
+    expect(result).toBeTruthy();
+  });
+
+  test("performs sebset check correctly", () => {
+    let set1 = new Set();
+    set1.add(1);
+    set1.add(2);
+    set1.add(5);
+    let set2 = new Set();
+    set2.add(1);
+    set2.add(2);
+    set2.add(3);
+    set2.add(4);
+    let result = set1.subset(set2);
+    expect(result).toBeFalsy();
+  });
+
 })

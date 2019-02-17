@@ -47,4 +47,20 @@ export default class Set {
     }
     return newSet
   }
+
+  difference(set2) {
+    let result = [];
+    for (let elem of this.values()) {
+      if (!set2.values().includes(elem)) {
+        result.push(elem)
+      }
+    }
+    return result;
+  }
+
+  subset(set2) {
+    let set2Vals = set2.values();
+    let values = this.values();
+    return values.every(elem => set2Vals.includes(elem));
+  }
 }

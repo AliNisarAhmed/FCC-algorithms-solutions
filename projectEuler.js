@@ -1,8 +1,32 @@
 
 
+// !!! Project Euler: Problem 5: Smallest Multiple
+
+// 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+// What is the smallest positive number that is evenly divisible by all of the numbers from 1 to n?
+
+function smallestMult(n) {
+  // Good luck!
+  let arr = new Array(n).fill(1);
+  arr = arr.map((elem, i) => i + 1);
+  let number = n * (n - 1);
+  while(!arr.every(elem => number % elem === 0)) {
+    number++;
+  }
+  return number;
+}
+
+console.log(smallestMult(5)) // should return 60
+console.log(smallestMult(7)); // should return 420..
+console.log(smallestMult(10));  // 2520
+console.log(smallestMult(13)) // should return 360360.
+console.log(smallestMult(20)) // should return 232792560.
+
+
 //========================================================================================================================
 
-// Project Euler - Problem 4: Largest Palindrome Product
+//!!! Project Euler - Problem 4: Largest Palindrome Product
 
 // A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 
