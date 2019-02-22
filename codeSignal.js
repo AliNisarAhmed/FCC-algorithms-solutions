@@ -1,3 +1,26 @@
+// XBONACCI - CodeWars  
+
+// Well met with Fibonacci bigger brother, AKA Tribonacci.
+// As the name may already reveal, it works basically like a Fibonacci, but summing the last 3 (instead of 2) numbers of the sequence to generate the next. 
+// So, if we are to start our Tribonacci sequence with [1, 1, 1] as a starting input (AKA signature), we have this sequence:
+// [1, 1 ,1, 3, 5, 9, 17, 31, ...]
+// Think of a Quadribonacci starting with a signature of 4 elements and each following element is the sum of the 4 previous, a Pentabonacci (well Cinquebonacci would probably sound a bit more italian, but it would also sound really awful) with a signature of 5 elements and each following element is the sum of the 5 previous, and so on.
+
+// Well, guess what? You have to build a Xbonacci function that takes a signature of X elements - and remember each next element is the sum of the last X elements - and returns the first n elements of the so seeded sequence.
+
+function Xbonacci(s, n){
+  let l = s.length;
+
+  return (function itself(sign, m) {
+      if (m < l) return sign.slice(0, m);
+      if (m === l) return sign;
+      let sum = sign.slice(-l).reduce((acc, x) => acc + x, 0);
+      return itself([...sign, sum], m - 1);
+    }(s, n));
+}
+
+
+
 
 // ======================================================================================================================
 
