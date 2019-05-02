@@ -12,7 +12,7 @@ class LinkedList {
     this.tail = null;
   }
 
-  push (val) {
+  push (val) {  // push a value to the end of the list
     let newNode = new Node(val);
     if (!this.head) {  // if head does not exist, we make the new val as head and the tail
       this.head = this.tail = newNode;
@@ -25,7 +25,7 @@ class LinkedList {
     return this;
   }
 
-  pop () {
+  pop () { // pops the value from the end of the list
     if (!this.head) return;
     if (this.length === 1) {
       let removed = this.head; 
@@ -46,7 +46,7 @@ class LinkedList {
     return current;
   }
 
-  shift () {
+  shift () {  // removes the first element
     if (!this.head) return;
     let oldHead = this.head;
     this.head = this.head.next;
@@ -67,7 +67,7 @@ class LinkedList {
     return this;
   }
 
-  get (index) {
+  get (index) {  // returns the node at the index;
     if (index >= this.length || index < 0) return null;
     let current = this.head;
     while(index > 0) {
@@ -77,7 +77,7 @@ class LinkedList {
     return current;
   }
 
-  set (index, value) {
+  set (index, value) {  // replaces the value of the node at the index with the given value
     let node = this.get(index);
     if (node) {
       node.val = value;
@@ -86,15 +86,80 @@ class LinkedList {
     return false
   }
 
+  insert (index, val) {  // inserts a new node at the index with the value of val
+    if (index < 0 || index > this.length) return false;
+    if (index === this.length) return !!this.push(val);
+    if (index === 0) return !!this.unshift(val);
+
+    let newNode = new Node(val);
+    let prevNode = this.get(index - 1);
+    newNode.next = prevNode.next;
+    prevNode.next = newNode; 
+    this.length++;
+    return true;
+  }
+
+  remove(index) {  // remove a node @ the index
+    if (index < 0 || index >= this.length) return false;
+    if (index === 0) return !!this.shift();
+    if (index === this.length - 1) return !!this.pop();
+    // let nodeToBeRemoved = this.head;
+    // let prevNode = this.head;
+    // while (index > 0) {
+    //   prevNode = nodeToBeRemoved;
+    //   nodeToBeRemoved = nodeToBeRemoved.next;
+    //   index--;
+    // }
+    // prevNode.next = nodeToBeRemoved.next;
+
+    // Can also use the code above
+    let prevNode = this.get(index - 1);
+    let nodeToBeRemoved = prevNode.next;
+    prevNode.next = nodeToBeRemoved.next
+    this.length--;
+    return true;
+  }
+
+  print() {
+    let arr = [];
+    let current = this.head;
+    while(current) {
+      arr.push(current.val);
+      current = current.next;
+    }
+    console.log(arr);
+  }
+
+  reverse() {
+    if (!this.head) return;
+
+    // [this.tail, this.head] = [this.head, this.tail];
+    let temp = this.head;
+    this.head = this.tail;
+    this.tail = temp;
+    let prev = null;
+    let next = null;
+    let node = this.tail;
+    while (node) {
+      next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    return this;
+  }
+
 }
 
 let list = new LinkedList();
 
 list.push(1).push(2).push(3);
-console.log(list.set(0, 4));
-console.log(list.set(1, 5));
-console.log(list.set(2, 6));
-console.log(list.set(3, 4));
+// console.log(list.remove(2));
+// console.log(list.remove(1));
+// console.log(list.remove(-1));
+// console.log(list.remove(2));
+
+list.reverse();
 console.log(list);
 
 
