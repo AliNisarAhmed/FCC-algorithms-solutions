@@ -113,13 +113,50 @@ class DoublyLinkedList {
     this.length++;
     return true;
   }
+
+  remove(index) {
+    if (index < 0 || index >= this.length) return undefined;
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
+    let nodeToBeRemoved = this.get(index);
+    nodeToBeRemoved.prev.next = nodeToBeRemoved.next;
+    nodeToBeRemoved.next.prev = nodeToBeRemoved.prev;
+    nodeToBeRemoved.next = null;
+    nodeToBeRemoved.prev = null;
+    this.length--;
+    return nodeToBeRemoved;
+  }
+
+  reverse() {
+    if (!this.head) return undefined;
+    let temp = this.head;
+    this.head = this.tail;
+    this.tail = temp;
+    if (this.length === 1) {
+      return this;
+    } else {
+      let currentNode = this.tail;
+      let prev = null;
+      while(currentNode) {
+        currentNode.prev = currentNode.next;
+        currentNode.next = prev;
+        prev = currentNode;
+        currentNode = currentNode.prev;
+      }
+      return this;
+    }
+  }
 }
 
 let list = new DoublyLinkedList();
-list.push(1).push(2).push(3).push(4).push(5).push(6);
+list.push(1).push(2).push(3)  //.push(4).push(5).push(6);
 // console.log(list.pop());
-console.log(list.insert(3, 200));
+// console.log(list.reverse());
+console.log(list);
+list.reverse();
 // console.log(list.pop());
 // list.pop();
 // list.pop();
 console.log(list);
+
+module.exports = DoublyLinkedList;
