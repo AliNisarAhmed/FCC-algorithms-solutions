@@ -55,6 +55,71 @@ class BinarySearchTree {
       }
     }
   }
+
+  bfs() {
+    let values = [];
+    let q = [];
+    if (!this.root) return values;
+    q.push(this.root);
+    while (q.length > 0) {
+      let currentNode = q[0];
+      values.push(currentNode.value);
+      if (currentNode.left) q.push(currentNode.left);
+      if (currentNode.right) q.push(currentNode.right);
+      q.shift();
+    }
+    return values;
+  }
+
+  dfs_preorder() {
+    // in preorder we traverse the whole left side of all nodes before traversing the right
+    let values = [];
+    if (!this.root) return values;
+    traverse(this.root);
+    return values;
+
+    function traverse(node) {
+      values.push(node.value);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+  }
+
+  dfs_postorder() {
+    // in postorder, we "visit" later, first we go all the way down to left, then right, then we visit the parent
+    let values = [];
+    if (!this.root) return values;
+    traverse(this.root);
+    return values;
+
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+      values.push(node.value);
+    }
+  }
+
+  dfs_inorder() {
+    // in "inorder", we traverse the whole left of a node, then we visit the node, then we visit the right side
+    // In all these "dfs" traversal techniques, the only difference is when do we "visit" the node
+
+    // in pre-order, we visit the node first, then left, then right;
+    // in post-order, we traverse left, then traverse right, then visit node;
+    // in in-order, we traverse left, then visit the node, then visit right
+
+    // The only difference, code-wise, is we push the node value into values array
+
+    let values = [];
+    if (!this.root) return values;
+    traverse(this.root);
+    return values;
+
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      values.push(node.value);
+      if (node.right) traverse(node.right);
+    }
+  }
 }
 
 let bst = new BinarySearchTree();
@@ -64,6 +129,12 @@ bst.insert(11);
 bst.insert(9);
 bst.insert(7);
 bst.insert(6);
+bst.insert(13);
+bst.insert(8);
 
-console.log(bst.find(2));
+//         10
+//     9        12
+//   7       11    13
+// 6  8
+console.log(bst.dfs_inorder());
 console.log(bst);
